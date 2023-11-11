@@ -5,13 +5,10 @@ import useTheme from "./../hooks/useTheme";
 import { ToastContainer } from "react-toastify";
 
 const MainLayout = () => {
-  const { changeTheme, mode } = useTheme();
+  const {changeTheme, mode}=useTheme();
   return (
     <div>
-      <button onClick={changeTheme}>
-        Make {mode === "dark" ? "Light" : "Dark"}
-      </button>
-      <Navbar></Navbar>
+      <Navbar changeTheme={changeTheme} mode={mode}></Navbar>
       <Outlet></Outlet>
       <Footer></Footer>
       <ToastContainer />

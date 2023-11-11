@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 
 const useTheme = () => {
   const [mode, setMode] = useState("light");
+  const html = document.documentElement;
   const changeTheme = () => {
-    const html = document.documentElement;
-    if (mode == "light") {
+        if (mode == "light") {
       html.classList.remove("light");
       html.classList.add("dark");
       setMode("dark");
