@@ -42,7 +42,7 @@ const BannerCard = ({ choice }) => {
   useEffect(() => {
     setUserWish(loggedInUser.wishlist);
     console.log(loggedInUser);
-  }, [loggedInUser, ]);
+  }, [loggedInUser]);
 
   const handleAddToBookmark = () => {
     axiosSecure
@@ -106,7 +106,36 @@ const BannerCard = ({ choice }) => {
           </div>
         </div>
         <div className="flex items-center gap-2 mt-4">
-            {(userWish?.indexOf(blog?._id) !== -1 || loggedInUser?._id===blog?.author_id) ? (
+          {user ? (
+            <>
+              {userWish?.indexOf(blog?._id) !== -1 ||
+              loggedInUser?._id === blog?.author_id ? (
+                <Button
+                  onClick={handleAddToBookmark}
+                  disabled
+                  outline
+                  color="gray"
+                >
+                  {loggedInUser?._id === blog?.author_id ? (
+                    <p>Own Post</p>
+                  ) : (
+                    <>
+                      <BsFillBookmarkCheckFill className="ml-2 h-5 w-5" />
+                      Added to Wishlist
+                    </>
+                  )}
+                </Button>
+              ) : (
+                <Button onClick={handleAddToBookmark} outline color="gray">
+                  <BsFillBookmarkCheckFill className="ml-2 h-5 w-5" />
+                  Add to Wishlist
+                </Button>
+              )}
+            </>
+          ) : (
+            <></>
+          )}
+          {/* {(userWish?.indexOf(blog?._id) !== -1 || loggedInUser?._id===blog?.author_id) ? (
               <Button onClick={handleAddToBookmark} disabled outline color="gray">
                 
                 {loggedInUser?._id===blog?.author_id ? <p>Own Post</p>:(<><BsFillBookmarkCheckFill className="ml-2 h-5 w-5" />
@@ -117,7 +146,7 @@ const BannerCard = ({ choice }) => {
                 <BsFillBookmarkCheckFill className="ml-2 h-5 w-5" />
                 Add to Wishlist
               </Button>
-            )}
+            )} */}
           <Link to={`/postDetails/${blog._id}`}>
             <Button>
               Read Now <HiOutlineArrowRight className="ml-2 h-5 w-5" />
@@ -132,7 +161,11 @@ const BannerCard = ({ choice }) => {
           <div className="space-y-6">
             <div className="relative flex flex-col text-gray-700 bg-white dark:bg-midnight_green-400 w-96 rounded-xl bg-clip-border">
               <div className="relative mx-4 mt-4 overflow-hidden text-gray-700 dark:text-white bg-white shadow-lg h-80 rounded-xl bg-clip-border">
-                <img src={author?.image} alt="profile-picture" className="w-full h-full" />
+                <img
+                  src={author?.image}
+                  alt="profile-picture"
+                  className="w-full h-full"
+                />
               </div>
               <div className="p-6 text-center">
                 <h4 className="block mb-2 font-sans text-2xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900 dark:text-white">

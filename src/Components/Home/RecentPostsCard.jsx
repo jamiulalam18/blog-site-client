@@ -100,28 +100,34 @@ const RecentPostsCard = ({ recentBlog }) => {
             </div>
           </div>
           <div className="flex items-center gap-2 mt-auto">
-            {userWish?.indexOf(_id) !== -1 ||
-            loggedInUser?._id === author_id ? (
-              <Button
-                onClick={handleAddToBookmark}
-                disabled
-                outline
-                color="gray"
-              >
-                {loggedInUser?._id === author_id ? (
-                  <p>Own Post</p>
+            {user ? (
+              <>
+                {userWish?.indexOf(_id) !== -1 ||
+                loggedInUser?._id === author_id ? (
+                  <Button
+                    onClick={handleAddToBookmark}
+                    disabled
+                    outline
+                    color="gray"
+                  >
+                    {loggedInUser?._id === author_id ? (
+                      <p>Own Post</p>
+                    ) : (
+                      <>
+                        <BsFillBookmarkCheckFill className="ml-2 h-5 w-5" />
+                        Added to Wishlist
+                      </>
+                    )}
+                  </Button>
                 ) : (
-                  <>
+                  <Button onClick={handleAddToBookmark} outline color="gray">
                     <BsFillBookmarkCheckFill className="ml-2 h-5 w-5" />
-                    Added to Wishlist
-                  </>
+                    Add to Wishlist
+                  </Button>
                 )}
-              </Button>
+              </>
             ) : (
-              <Button onClick={handleAddToBookmark} outline color="gray">
-                <BsFillBookmarkCheckFill className="ml-2 h-5 w-5" />
-                Add to Wishlist
-              </Button>
+              <></>
             )}
 
             <Link to={`/postDetails/${_id}`}>
@@ -138,7 +144,11 @@ const RecentPostsCard = ({ recentBlog }) => {
           <div className="space-y-6">
             <div className="relative flex flex-col text-gray-700 bg-white dark:bg-midnight_green-400 w-96 rounded-xl bg-clip-border">
               <div className="relative mx-4 mt-4 overflow-hidden text-gray-700 dark:text-white bg-white shadow-lg h-80 rounded-xl bg-clip-border">
-                <img src={author?.image} alt="profile-picture" className="w-full h-full" />
+                <img
+                  src={author?.image}
+                  alt="profile-picture"
+                  className="w-full h-full"
+                />
               </div>
               <div className="p-6 text-center">
                 <h4 className="block mb-2 font-sans text-2xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900 dark:text-white">

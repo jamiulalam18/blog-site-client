@@ -10,8 +10,9 @@ import FeaturedPosts from "./../Pages/FeaturedPosts";
 import UserProfile from "../Pages/UserProfile";
 import UserWishlist from "../Pages/UserWishlist";
 import UserPosts from "../Pages/UserPosts";
-import PostDetail from './../Pages/PostDetail';
-import UpdatePost from './../Pages/UpdatePost';
+import PostDetail from "./../Pages/PostDetail";
+import UpdatePost from "./../Pages/UpdatePost";
+import PrivateRoute from "./../PrivateRoute/PrivateRoute";
 
 const CustomRoutes = createBrowserRouter([
   {
@@ -33,44 +34,76 @@ const CustomRoutes = createBrowserRouter([
       },
       {
         path: "/allPosts",
-        element: <AllPosts></AllPosts>,
+        element: (
+          <PrivateRoute>
+            <AllPosts></AllPosts>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/addPost",
-        element: <AddPost></AddPost>,
+        element: (
+          <PrivateRoute>
+            <AddPost></AddPost>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/featuredPosts",
-        element: <FeaturedPosts></FeaturedPosts>,
+        element: (
+          <PrivateRoute>
+            <FeaturedPosts></FeaturedPosts>
+          </PrivateRoute>
+        ),
       },
       {
         path: "userProfile/:id",
-        element: <UserProfile></UserProfile>,
+        element: (
+          <PrivateRoute>
+            <UserProfile></UserProfile>
+          </PrivateRoute>
+        ),
         loader: ({ params }) => {
           return fetch(`http://localhost:5000/users/${params.id}`);
         },
       },
       {
         path: "userPosts/:id",
-        element: <UserPosts></UserPosts>,
+        element: (
+          <PrivateRoute>
+            <UserPosts></UserPosts>
+          </PrivateRoute>
+        ),
         loader: ({ params }) => {
           return fetch(`http://localhost:5000/users/${params.id}`);
         },
       },
       {
         path: "userWishlist/:id",
-        element: <UserWishlist></UserWishlist>,
+        element: (
+          <PrivateRoute>
+            <UserWishlist></UserWishlist>
+          </PrivateRoute>
+        ),
       },
       {
         path: "postDetails/:id",
-        element: <PostDetail></PostDetail>,
+        element: (
+          <PrivateRoute>
+            <PostDetail></PostDetail>
+          </PrivateRoute>
+        ),
         loader: ({ params }) => {
           return params.id;
         },
       },
       {
         path: "updatePost/:id",
-        element: <UpdatePost></UpdatePost>,
+        element: (
+          <PrivateRoute>
+            <UpdatePost></UpdatePost>
+          </PrivateRoute>
+        ),
         loader: ({ params }) => {
           return params.id;
         },
