@@ -4,6 +4,7 @@ import useAxiosSecure from "./../hooks/useAxiosSecure";
 import { Label, Select } from "flowbite-react";
 import PostCard from "../Components/AllPosts/PostCard";
 import { AiOutlineFileSearch } from "react-icons/ai";
+import { Helmet } from "react-helmet";
 const AllPosts = () => {
   const [blogs, setBlogs] = useState([]);
   const [itemsPerPage, setItemsPerPage] = useState(2);
@@ -16,25 +17,27 @@ const AllPosts = () => {
   const axiosSecure = useAxiosSecure();
 
   const [blogType, setBlogType] = useState("All");
-  const [searchData, setSearchData]= useState("");
+  const [searchData, setSearchData] = useState("");
 
   useEffect(() => {
-    axiosSecure.get(`/blogsCount?filter=${blogType}&search=${searchData}`).then((res) => {
-      setCount(res.data.count);
-    });
-  }, [axiosSecure, blogType,searchData]);
+    axiosSecure
+      .get(`/blogsCount?filter=${blogType}&search=${searchData}`)
+      .then((res) => {
+        setCount(res.data.count);
+      });
+  }, [axiosSecure, blogType, searchData]);
 
-//   useEffect(() => {
-//     axiosSecure
-//       .get(
-//         `/blogsByPage?page=${
-//           currentPage - 1
-//         }&size=${itemsPerPage}&filter=${blogType}`
-//       )
-//       .then((res) => {
-//         setBlogs(res.data);
-//       });
-//   }, [currentPage, itemsPerPage, axiosSecure, blogType]);
+  //   useEffect(() => {
+  //     axiosSecure
+  //       .get(
+  //         `/blogsByPage?page=${
+  //           currentPage - 1
+  //         }&size=${itemsPerPage}&filter=${blogType}`
+  //       )
+  //       .then((res) => {
+  //         setBlogs(res.data);
+  //       });
+  //   }, [currentPage, itemsPerPage, axiosSecure, blogType]);
 
   useEffect(() => {
     axiosSecure
@@ -60,27 +63,36 @@ const AllPosts = () => {
     setCurrentPage(1);
   };
 
-  const handleSearch =(e)=>{
+  const handleSearch = (e) => {
     e.preventDefault();
     const form = new FormData(e.currentTarget);
     const searchText = form.get("searchText");
     setSearchData(searchText);
     // document.getElementById("searchForm").reset();
     setCurrentPage(1);
-  }
-  const handleSearchOnChange =(e)=>{
+  };
+  const handleSearchOnChange = (e) => {
     e.preventDefault();
     const form = new FormData(e.currentTarget);
     const searchText = form.get("searchText");
     setSearchData(searchText);
     setCurrentPage(1);
-
-  }
+  };
 
   return (
     <div className="max-w-screen-xl mx-auto pt-28 flex flex-col items-center justify-center">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>BlogVerse: All Posts</title>
+      </Helmet>
       <div className="flex flex-col lg:flex-row w-full items-center gap-4 justify-end lg:px-5">
-        <form action="submit" id="searchForm" onChange={handleSearchOnChange} onSubmit={handleSearch} className="flex flex-1">
+        <form
+          action="submit"
+          id="searchForm"
+          onChange={handleSearchOnChange}
+          onSubmit={handleSearch}
+          className="flex flex-1"
+        >
           <TextInput
             id="searchText"
             type="text"
@@ -96,9 +108,19 @@ const AllPosts = () => {
         </form>
         <div className="flex items-center">
           <div className="block text-2xl">
-            <Label className="text-xl" htmlFor="filter" value="Filter By Category:" />
+            <Label
+              className="text-xl"
+              htmlFor="filter"
+              value="Filter By Category:"
+            />
           </div>
-          <Select className="" id="filter" value={blogType} onChange={handleFilter} required>
+          <Select
+            className=""
+            id="filter"
+            value={blogType}
+            onChange={handleFilter}
+            required
+          >
             <option>All</option>
             <option>Technology</option>
             <option>Film and Music</option>

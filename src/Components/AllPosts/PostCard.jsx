@@ -3,12 +3,16 @@ import { Badge, Button } from "flowbite-react";
 import { HiOutlineArrowRight } from "react-icons/hi";
 import { BsFillBookmarkCheckFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { ImFacebook2 } from "react-icons/im";
+import { FaTwitter, FaInstagramSquare } from "react-icons/fa";
+import { Modal } from "flowbite-react";
+import { successToast } from "../../Toasts/SuccessToast";
+import { AuthContext } from "../../Provider/AuthProvider";
 
-const handleAddToBookmark = () => {
-  console.log("Add to Bookmark");
-};
+
+
 
 const PostCard = ({ blog }) => {
   const {
@@ -21,6 +25,8 @@ const PostCard = ({ blog }) => {
     author_id,
     timePosted,
   } = blog;
+  const { loggedInUser, user, setLoggedInUser } = useContext(AuthContext);
+  const [userWish, setUserWish] = useState([]);
   const axiosSecure = useAxiosSecure();
   const [author, setAuthor] = useState({});
   if (timePosted) {
@@ -34,6 +40,30 @@ const PostCard = ({ blog }) => {
       setAuthor(res.data);
     });
   }, [axiosSecure, author_id]);
+
+  const [openModal, setOpenModal] = useState(false);
+
+  function onCloseModal() {
+    setOpenModal(false);
+  }
+
+  useEffect(() => {
+    setUserWish(loggedInUser.wishlist);
+    console.log(loggedInUser);
+  }, [loggedInUser, ]);
+
+  const handleAddToBookmark = () => {
+    axiosSecure
+      .patch(`/addToWishList/${loggedInUser._id}`, { blogId: blog?._id })
+      .then((res) => {
+        if (res.data.modifiedCount === 1) {
+          successToast("Post saved to wishlist!!!!");
+          axiosSecure
+            .get(`usersByEmail/${user?.email}`)
+            .then((res) => setLoggedInUser(res.data));
+        }
+      });
+  };
 
   return (
     <div className="max-w-sm w-full lg:max-w-full lg:flex mb-2">
@@ -61,7 +91,7 @@ const PostCard = ({ blog }) => {
             ))}
           </div>
         </div>
-        <div className="flex items-center">
+        <div className="flex items-center hover:cursor-pointer" onClick={() => setOpenModal(true)}>
           <img
             className="w-10 h-10 rounded-full mr-4"
             src={author?.image}
@@ -73,10 +103,18 @@ const PostCard = ({ blog }) => {
           </div>
         </div>
         <div className="flex items-center gap-2 mt-4">
-          <Button onClick={handleAddToBookmark} outline color="gray">
-            <BsFillBookmarkCheckFill className="ml-2 h-5 w-5" />
-            Add to Wishlist
-          </Button>
+        {(userWish?.indexOf(blog?._id) !== -1 || loggedInUser?._id===author_id) ? (
+              <Button onClick={handleAddToBookmark} disabled outline color="gray">
+                
+                {loggedInUser?._id===author_id ? <p>Own Post</p>:(<><BsFillBookmarkCheckFill className="ml-2 h-5 w-5" />
+                Added to Wishlist</>)}
+              </Button>
+            ) : (
+              <Button onClick={handleAddToBookmark} outline color="gray">
+                <BsFillBookmarkCheckFill className="ml-2 h-5 w-5" />
+                Add to Wishlist
+              </Button>
+            )}
           <Link to={`/postDetails/${_id}`}>
             <Button>
               Read Now <HiOutlineArrowRight className="ml-2 h-5 w-5" />
@@ -84,6 +122,37 @@ const PostCard = ({ blog }) => {
           </Link>
         </div>
       </div>
+      <Modal show={openModal} size="md" onClose={onCloseModal} popup>
+        <Modal.Header />
+        <Modal.Body>
+          <div className="space-y-6">
+            <div className="relative flex flex-col text-gray-700 bg-white dark:bg-midnight_green-400 w-96 rounded-xl bg-clip-border">
+              <div className="relative mx-4 mt-4 overflow-hidden text-gray-700 dark:text-white bg-white shadow-lg h-80 rounded-xl bg-clip-border">
+                <img src={author?.image} alt="profile-picture" className="w-full h-full" />
+              </div>
+              <div className="p-6 text-center">
+                <h4 className="block mb-2 font-sans text-2xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900 dark:text-white">
+                  {author?.full_name}
+                </h4>
+                <p className="block font-sans text-base antialiased font-medium leading-relaxed text-transparent bg-gradient-to-tr from-pink-600 to-pink-400 dark:from-pink-400 dark:to-pink-600 bg-clip-text">
+                  Senior Journalist
+                </p>
+              </div>
+              <div className="flex justify-center p-6 pt-2 gap-7 dark:text-white">
+                <a href="#facebook">
+                  <ImFacebook2></ImFacebook2>
+                </a>
+                <a href="#twitter">
+                  <FaTwitter></FaTwitter>
+                </a>
+                <a href="#instagram">
+                  <FaInstagramSquare></FaInstagramSquare>
+                </a>
+              </div>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
     </div>
 
     // <Card className="max-w-sm lg:max-w-none mb-4" imgSrc={thumbnail} horizontal>

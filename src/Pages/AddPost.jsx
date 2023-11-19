@@ -1,8 +1,13 @@
+import { Helmet } from "react-helmet";
 import AddPostForm from "../Components/AddPost/AddPostForm";
 
 const AddPost = () => {
   return (
     <div>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>BlogVerse: Add Post</title>
+      </Helmet>
       <div className="max-w-screen-xl mx-auto pt-24">
         <div className="bg-cambridge_blue-800 dark:bg-night text-center rounded-lg py-4">
           <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-5xl dark:text-white">

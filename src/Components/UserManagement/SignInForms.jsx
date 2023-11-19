@@ -35,6 +35,7 @@ const SignInForms = () => {
       })
       .catch((error) => {
         console.log(error);
+        console.log(email);
         fetch(`http://localhost:5000/users/usersByEmail/${email}`)
           .then((response) => response.json())
           .then((data) => {
@@ -44,16 +45,16 @@ const SignInForms = () => {
               setErrorClass("relative w-full min-w-[200px] block");
               errorToast("Incorrect Password!!!");
             } else {
-              setErrorDiv("User account does not exist!!!");
+              setErrorDiv("Incorrect User Credentials!!!");
               setErrorClass("relative w-full min-w-[200px] block");
-              errorToast("User account does not exist!!!");
+              errorToast("Incorrect User Credentials!!!");
             }
           })
           .catch((error) => {
             console.error(error.message);
-            setErrorDiv("User account does not exist!!!");
+            setErrorDiv("Incorrect User Credentials!!!");
             setErrorClass("relative w-full min-w-[200px] block");
-            errorToast("User account does not exist!!!");
+            errorToast("Incorrect User Credentials!!!");
           });
 
         // setErrorDiv("Invalid User Credentials!!!!");

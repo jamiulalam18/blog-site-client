@@ -67,6 +67,7 @@ const AuthProvider = ({ children }) => {
     createUser,
     signIn,
     loggedInUser,
+    setLoggedInUser
   };
   return (
     <AuthContext.Provider value={authentication}>

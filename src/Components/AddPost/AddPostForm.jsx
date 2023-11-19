@@ -30,9 +30,9 @@ const AddPostForm = () => {
     const main_post = form.get("main_post");
     const post_tags = form.get("post_tags");
     const main_post_Style = form.get("markdown-format");
-    const post_tags_arr = post_tags.split(",").map(function(item) {
-        return item.trim();
-      });
+    const post_tags_arr = post_tags.split(",").map(function (item) {
+      return item.trim();
+    });
     const author_id = loggedInUser._id;
 
     let url = "";
@@ -51,7 +51,7 @@ const AddPostForm = () => {
           .then(function (response) {
             url = response.data.data.url;
             const main_img = url;
-            const comments=[];
+            const comments = [];
 
             const new_product = {
               author_id,
@@ -101,6 +101,12 @@ const AddPostForm = () => {
         console.log(error);
       });
   };
+
+  function auto_grow(e) {
+    e.currentTarget.style.height="5px";
+    e.currentTarget.style.height = e.currentTarget.scrollHeight + "px";
+  }
+
   return (
     <div className="bg-white dark:bg-myrtle_green-200 flex justify-center w-full rounded-lg">
       <form
@@ -177,6 +183,8 @@ const AddPostForm = () => {
               placeholder="Write a short description of your post..."
               required
               rows={2}
+              onInput={auto_grow}
+              className="min-h-16"
             />
           </div>
         </div>
@@ -192,6 +200,8 @@ const AddPostForm = () => {
               placeholder="Write the main text here. You can write in plain text or in markdown text format...."
               required
               rows={4}
+              onInput={auto_grow}
+              className="min-h-[128px]"
             />
           </div>
         </div>

@@ -58,7 +58,7 @@ const CustomRoutes = createBrowserRouter([
         },
       },
       {
-        path: "userWishlist/",
+        path: "userWishlist/:id",
         element: <UserWishlist></UserWishlist>,
       },
       {
@@ -68,12 +68,11 @@ const CustomRoutes = createBrowserRouter([
           return params.id;
         },
       },
-
       {
         path: "updatePost/:id",
         element: <UpdatePost></UpdatePost>,
         loader: ({ params }) => {
-          return fetch(`http://localhost:5000/users/${params.id}`);
+          return params.id;
         },
       },
     ],
