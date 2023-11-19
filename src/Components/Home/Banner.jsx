@@ -10,9 +10,8 @@ const Banner = () => {
           {/* <img alt="..." src={brandInfo?.brand_banners?.[0]} />
           <img alt="..." src={brandInfo?.brand_banners?.[1]} />
           <img alt="..." src={brandInfo?.brand_banners?.[2]} /> */}
-          {choices.map((choice) => (
-            // eslint-disable-next-line react/jsx-key
-            <div className="w-full flex justify-center">
+          {choices.map((choice, index) => (
+            <div key={index} className="w-full flex justify-center">
               <BannerCard key={choice.idx} choice={choice}></BannerCard>
             </div>
           ))}

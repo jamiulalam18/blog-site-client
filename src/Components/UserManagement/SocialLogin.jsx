@@ -17,7 +17,7 @@ const SocialLogin = () => {
         const photo = result.user.photoURL;
 
         fetch(
-          `http://localhost:5000/usersByEmail/${email}`
+          `https://prism-pages-server.vercel.app/usersByEmail/${email}`
         )
           .then((response) => response.json())
           .then((data) => {
@@ -35,7 +35,7 @@ const SocialLogin = () => {
               };
               // send data to the server
               fetch(
-                "http://localhost:5000/users",
+                "https://prism-pages-server.vercel.app/users",
                 {
                   method: "POST",
                   headers: {
@@ -65,7 +65,7 @@ const SocialLogin = () => {
             };
             // send data to the server
             fetch(
-              "http://localhost:5000/users",
+              "https://prism-pages-server.vercel.app/users",
               {
                 method: "POST",
                 headers: {

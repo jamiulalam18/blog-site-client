@@ -36,7 +36,7 @@ const SignInForms = () => {
       .catch((error) => {
         console.log(error);
         console.log(email);
-        fetch(`http://localhost:5000/users/usersByEmail/${email}`)
+        fetch(`https://prism-pages-server.vercel.app/users/usersByEmail/${email}`)
           .then((response) => response.json())
           .then((data) => {
             console.log(data);

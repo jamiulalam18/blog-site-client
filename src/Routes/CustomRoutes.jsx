@@ -62,10 +62,7 @@ const CustomRoutes = createBrowserRouter([
           <PrivateRoute>
             <UserProfile></UserProfile>
           </PrivateRoute>
-        ),
-        loader: ({ params }) => {
-          return fetch(`http://localhost:5000/users/${params.id}`);
-        },
+        )
       },
       {
         path: "userPosts/:id",
@@ -73,10 +70,7 @@ const CustomRoutes = createBrowserRouter([
           <PrivateRoute>
             <UserPosts></UserPosts>
           </PrivateRoute>
-        ),
-        loader: ({ params }) => {
-          return fetch(`http://localhost:5000/users/${params.id}`);
-        },
+        )
       },
       {
         path: "userWishlist/:id",

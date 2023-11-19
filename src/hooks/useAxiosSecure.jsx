@@ -5,7 +5,8 @@ import { AuthContext } from "../Provider/AuthProvider";
 
 
 const axiosSecure = axios.create({
-    baseURL: 'http://localhost:5000',
+    baseURL: 'https://prism-pages-server.vercel.app',
+    // baseURL:'http://localhost:5000',
     withCredentials: false
 });
 const useAxiosSecure = () => {

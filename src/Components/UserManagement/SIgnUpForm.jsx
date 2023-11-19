@@ -114,7 +114,7 @@ const SIgnUpForm = () => {
               });
 
             // send data to the server
-            fetch("http://localhost:5000/users", {
+            fetch("https://prism-pages-server.vercel.app/users", {
               method: "POST",
               headers: {
                 "content-type": "application/json",
@@ -136,7 +136,7 @@ const SIgnUpForm = () => {
           .catch((error) => {
             console.error(error.message);
 
-            fetch(`http://localhost:5000/usersByEmail/${email}`)
+            fetch(`https://prism-pages-server.vercel.app/usersByEmail/${email}`)
               .then((response) => response.json())
               .then((data) => {
                 console.log(data);

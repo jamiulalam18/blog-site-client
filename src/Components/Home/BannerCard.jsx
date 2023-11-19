@@ -40,8 +40,7 @@ const BannerCard = ({ choice }) => {
   }, [axiosSecure, blog]);
 
   useEffect(() => {
-    setUserWish(loggedInUser.wishlist);
-    console.log(loggedInUser);
+    setUserWish(loggedInUser?.wishlist);
   }, [loggedInUser]);
 
   const handleAddToBookmark = () => {
